@@ -62,7 +62,7 @@ export default function page() {
 
   return (
     <div className="  bg-[url('/bg.png')] h-screen bg-cover">
-      <div className="  bg-[url('/purple.png')] flex flex-col gap-17 h-full bg-cover grid-cols-4">
+      <div className="  bg-[url('/purple.png')] flex flex-col gap-10 h-full bg-cover grid-cols-4">
         <div className=" col-span-1 ">
           <div className=" flex justify-end gap-7 p-3">
             <div className=" font-medium text-base text-[#7E0140] rounded-xl p-2 bg-white">
@@ -75,10 +75,10 @@ export default function page() {
           </div>
         </div>
 
-        <div className=" h-full flex items-center justify-center col-span-3 ">
+        <div className=" h-full flex  justify-center col-span-3 ">
           <form
             onSubmit={handleSubmit}
-            className=" w-3/4 grid grid-cols-3 gap-10 items-center  px-4"
+            className=" h-3/4 w-3/4 grid grid-cols-3 gap-10 items-center  px-4"
           >
             <div className="col-span-2 flex flex-col gap-10 p-5 rounded-2xl h-full w- bg-white">
               <div>
@@ -163,11 +163,10 @@ export default function page() {
                 </div>
               </div>
               <div className=" flex flex-col gap-5 ">
-                {/* <Link href="/dashboard" onClick={() => handleSubmit}> */}
                   <button type="submit" className="w-full bg-[#7E0140] cursor-pointer text-white font-semibold py-3 rounded-xl">
                     Sign In
                   </button>
-                {/* </Link> */}
+            
 
                 <div className="flex justify-between items-center text-sm text-[#999999] gap-2">
                   <hr className="w-2/5 border-t border-[#C3C3C4]" />

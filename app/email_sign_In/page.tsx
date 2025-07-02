@@ -28,8 +28,8 @@ export default function page() {
           </div>
         </div>
 
-        <div className=" h-full flex items-center justify-center col-span-3 ">
-          <div className=" w-3/4 grid grid-cols-3 gap-10 items-center  px-4">
+        <div className=" h-full flex justify-center col-span-3 ">
+          <div className=" h-3/4 w-3/4 grid grid-cols-3 gap-10 items-center  px-4">
             <div className="col-span-2 flex flex-col gap-10 p-5 rounded-2xl h-full w- bg-white">
               <div>
                 <img src="/logo.png" alt="" />
