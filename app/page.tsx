@@ -1,7 +1,5 @@
 "use client";
-import { getRequest, login } from "@/api/apiCall";
-import { AGENT_LOGIN, SUMMARY } from "@/api/apiUrl";
-import { queryKeys } from "@/api/queryKey";
+import {  login } from "@/api/apiCall";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -44,11 +42,7 @@ export default function page() {
 
 
 
-  const [state, setState] = useState({
-    email: "",
-    password: "",
-  });
-  
+
   const handleSubmit = (e: React.FormEvent) => {
     // router.push("/dashboard");
     e.preventDefault();
