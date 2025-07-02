@@ -27,27 +27,22 @@ export default function page() {
 
   const router = useRouter();
 
-    const { data } = useQuery({
-    queryKey: [queryKeys.getSummary],
-    queryFn: async () => await getRequest({ url: SUMMARY }),
-    retry: 2,
-  });
-
-  console.log(data)
-
-
-  const mutation = useMutation({
-    mutationFn: async () =>
-      await login({ url: AGENT_LOGIN, data: { email, password } }),
+    
+  const loginMutation = useMutation({
+    mutationFn: login,
     onSuccess: (data) => {
-      if (data) {
-        console.log("Login success:", data);
-      }
+      
+      console.log(data)
+      localStorage.setItem("token", data.token); 
+      router.push("/dashboard");
     },
-    onError: (error) => {
-      console.error("Login failed:", error);
+    onError: (error: any) => {
+      console.error("Login failed", error?.response?.data || error.message);
+      alert("Login failed. Please check your credentials.");
     },
   });
+
+
 
   const [state, setState] = useState({
     email: "",
@@ -55,9 +50,10 @@ export default function page() {
   });
   
   const handleSubmit = (e: React.FormEvent) => {
-    router.push("/dashboard");
+    // router.push("/dashboard");
     e.preventDefault();
-    mutation.mutate();
+     loginMutation.mutate({ email, password });
+  
   };
 
   return (
