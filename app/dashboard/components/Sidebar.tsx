@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   User,
   LayoutDashboard,
@@ -11,6 +11,16 @@ import {
 
 export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
+
+  // Collapse sidebar by default on small screens
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
+    setCollapsed(mediaQuery.matches);
+
+    const handleResize = () => setCollapsed(mediaQuery.matches);
+    mediaQuery.addEventListener("change", handleResize);
+    return () => mediaQuery.removeEventListener("change", handleResize);
+  }, []);
 
   return (
     <div className="h-full">
