@@ -31,7 +31,7 @@ export default function page() {
     onSuccess: (data) => {
       
       console.log(data)
-      localStorage.setItem("token", data.token); 
+      localStorage.setItem("authtoken", data.agentDetails.code); 
       router.push("/dashboard");
     },
     onError: (error: any) => {
@@ -44,7 +44,6 @@ export default function page() {
 
 
   const handleSubmit = (e: React.FormEvent) => {
-    // router.push("/dashboard");
     e.preventDefault();
      loginMutation.mutate({ email, password });
   

@@ -1,61 +1,11 @@
 import { CalendarCheck2, ListChecks, BookmarkX, ClipboardPen, SquarePlus, ClipboardList } from 'lucide-react';
 import React from 'react'
 
-export default function Stats() {
-  const stats = [
-    {
-      title: "Daily Check-in",
-      value: "5,000",
-      unit: "+0.5%",
-      icon: <CalendarCheck2 className="w-5 h-5" />,
-    },
-    {
-      title: "Daily Check-out",
-      value: "5,000",
-      unit: "+0.5%",
-      icon: <CalendarCheck2 className="w-5 h-5" />,
-    },
-    {
-      title: "New Bookings",
-      value: "5,000",
-      unit: "+0.5%",
-      icon: <ListChecks className="w-5 h-5" />,
-    },
-    {
-      title: "Total Cancelations",
-      value: "5,000",
-      unit: "+0.5%",
-      icon: <BookmarkX className="w-5 h-5" />,
-    },
-    {
-      title: "Pending bookings",
-      value: "5,000",
-      unit: "+0.5%",
-      icon: <ClipboardPen className="w-5 h-5" />,
-    },
-    {
-      title: "Total Expired",
-      value: "5,000",
-      unit: "+0.5%",
-      icon: <SquarePlus className="w-5 h-5" />,
-    },
-    {
-      title: "Total Bookings",
-      value: "5,000",
-      unit: "+0.5%",
-      icon: <ClipboardList className="w-5 h-5" />,
-    },
-    {
-      title: "Total Cancelations",
-      value: "N500,000",
-      unit: "+0.5%",
-      icon: <ListChecks className="w-5 h-5" />,
-    },
-  ];
+export default function Stats({data}: any) {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 p-2 sm:p-0">
-      {stats.map((stat, index) => (
+      {data.map((stat: { icon: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined; title: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined; value: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined; unit: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined; }, index: React.Key | null | undefined) => (
         <div
           key={index}
           className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow p-3 sm:p-4"

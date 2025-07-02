@@ -1,11 +1,102 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Search, Calendar, Download } from "lucide-react";
 import { FiltersBar } from "./components/FiltersBar";
 import Stats from "./components/Stats";
 import Table from "./components/Table";
+import { useQuery } from "@tanstack/react-query";
+import { getRequest } from "@/api/apiCall";
+import { RESERVATIONS, SUMMARY } from "@/api/apiUrl";
+import { CalendarCheck2, ListChecks, BookmarkX, ClipboardPen, SquarePlus, ClipboardList } from 'lucide-react';
+
 
 export default function page() {
+
+  // console.log("Stored token:", localStorage.getItem("authtoken"));
+
+
+  const {
+    data: summaryData,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["agent-summary"],
+    queryFn: () => getRequest({ url: SUMMARY }),
+    enabled: typeof window !== "undefined", 
+  });
+
+   const {
+    data: reserveData,
+  } = useQuery({
+    queryKey: ["agent-reservation"],
+    queryFn: () => getRequest({ url: RESERVATIONS }),
+    enabled: typeof window !== "undefined", 
+  });
+  
+  const summary = summaryData?.summary;
+
+  const statsData = summary
+    ? [
+        {
+          title: "Daily Check-in",
+          value: summary.dailyCheckIn.count,
+          unit: summary.dailyCheckIn.change,
+          icon: <CalendarCheck2 className="w-5 h-5" />,
+        },
+        {
+          title: "Daily Check-out",
+          value: summary.dailyCheckOut.count,
+          unit: summary.dailyCheckOut.change,
+          icon: <CalendarCheck2 className="w-5 h-5" />,
+        },
+        {
+          title: "New Bookings",
+          value: summary.newBookings.count,
+          unit: summary.newBookings.change,
+          icon: <ListChecks className="w-5 h-5" />,
+        },
+        {
+          title: "Total Cancellations",
+          value: summary.totalCancellations.count,
+          unit: summary.totalCancellations.change,
+          icon: <BookmarkX className="w-5 h-5" />,
+        },
+        {
+          title: "Pending Bookings",
+          value: summary.pendingBookings.count,
+          unit: summary.pendingBookings.change,
+          icon: <ClipboardPen className="w-5 h-5" />,
+        },
+        {
+          title: "Total Extended",
+          value: summary.totalExtended.count,
+          unit: summary.totalExtended.change,
+          icon: <SquarePlus className="w-5 h-5" />,
+        },
+        {
+          title: "Total Bookings",
+          value: summary.totalBookings.count,
+          unit: summary.totalBookings.change,
+          icon: <ClipboardList className="w-5 h-5" />,
+        },
+        {
+          title: "Total Commission",
+          value: `₦${Number(summary.totalCommission).toLocaleString()}`,
+          unit: "+0%", // You can adjust this if you want
+          icon: <ListChecks className="w-5 h-5" />,
+        },
+      ]
+    : [];
+
+  useEffect(() => {
+    if (reserveData) {
+      console.log("✅ Reserve data fetched:", reserveData);
+    }
+  }, [summaryData]);
+
+  if (isLoading) return <p className="p-4">Loading summary...</p>;
+  if (isError)
+    return <p className="p-4 text-red-500">Failed to load summary</p>;
   return (
     <div className=" w-full">
       <main className="flex flex-col px-6">
@@ -39,7 +130,7 @@ export default function page() {
           </div>
 
           <div>
-            <Stats />
+            <Stats data={statsData}/>
           </div>
 
           <div className="bg-white p-4">
