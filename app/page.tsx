@@ -42,7 +42,6 @@ export default function page() {
     onSuccess: (data) => {
       if (data) {
         console.log("Login success:", data);
-        // router.push("/dashboard");
       }
     },
     onError: (error) => {
@@ -54,8 +53,9 @@ export default function page() {
     email: "",
     password: "",
   });
-
+  
   const handleSubmit = (e: React.FormEvent) => {
+    router.push("/dashboard");
     e.preventDefault();
     mutation.mutate();
   };
