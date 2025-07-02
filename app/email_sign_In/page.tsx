@@ -10,9 +10,34 @@ import {
   DialogDescription,
   DialogFooter,
 } from "@/components/ui/dialog";
+import { getOTP, verifyOTP } from "@/api/apiCall";
 
 export default function page() {
   const [open, setOpen] = useState(false);
+
+  const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
+
+  const handleGetOTP = async () => {
+    try {
+      const response = await getOTP(email);
+      console.log("OTP Sent:", response);
+      setOpen(true);
+    } catch (err) {
+      console.error("Error sending OTP:", err);
+    }
+  };
+
+  const handleVerifyOTP = async () => {
+    try {
+      const response = await verifyOTP({ email, otp });
+      setOpen(false);
+      console.log("OTP Verified:", response);
+    } catch (err) {
+      console.error("Error verifying OTP:", err);
+    }
+  };
+
   return (
     <div className="  bg-[url('/bg.png')] h-screen bg-cover">
       <div className="  bg-[url('/purple.png')] flex flex-col gap-17 h-full bg-cover grid-cols-4">
@@ -44,10 +69,12 @@ export default function page() {
                       <input
                         type="email"
                         placeholder="Email address"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         className="w-full bg-transparent outline-none text-sm font-medium"
                       />
                       <button
-                        onClick={() => setOpen(true)}
+                        onClick={handleGetOTP}
                         className=" cursor-pointer text-[#7E0140] text-sm font-semibold "
                       >
                         VERIFY
@@ -135,10 +162,11 @@ export default function page() {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>
           <DialogHeader>
-            <img src="/alert.png" alt="" className=" h-16 w-16"/>
+            <img src="/alert.png" alt="" className=" h-16 w-16" />
             <DialogTitle>Enter OTP</DialogTitle>
             <DialogDescription>
-              A confirmation code has been sent to your email <br />address at johndoe@gmail.com
+              A confirmation code has been sent to your email <br />
+              address at johndoe@gmail.com
             </DialogDescription>
           </DialogHeader>
 
@@ -153,12 +181,16 @@ export default function page() {
               id="code"
               type="text"
               placeholder="Enter code"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
               className="w-full border border-[#C3C3C4] rounded-xl px-4 py-3 text-sm outline-none"
             />
           </div>
 
           <div className=" w-full flex justify-center gap-2">
-            <div className=" font-normal text-sm text-[#4F4F50]">Resend confirmation code in</div>
+            <div className=" font-normal text-sm text-[#4F4F50]">
+              Resend confirmation code in
+            </div>
             <div className=" font-medium text-sm">0:30</div>
           </div>
 
@@ -171,9 +203,7 @@ export default function page() {
             </button>
             <button
               className="bg-[#FFEFCC]  px-4 py-2 rounded-lg text-sm font-medium"
-              onClick={() => {
-                setOpen(false);
-              }}
+              onClick={handleVerifyOTP}
             >
               Verify
             </button>

@@ -5,14 +5,15 @@ const apiToken = axios.create({
   withCredentials: true,
 });
 
-export const postRequest = async ({
-  url,
-  data,
-}: {
-  url: string;
-  data: any | File | FileList;
-}) => {
-  const response = await apiToken.post(url, data);
+const base = "https://api.ngbookings.com/api";
+
+export const getOTP = async (email: string) => {
+  const response = await axios.post(`${base}/agent_auth/get-email-otp`, { email });
+  return response.data;
+};
+
+export const verifyOTP = async ({ email, otp }: { email: string; otp: string }) => {
+  const response = await axios.post(`${base}/agent_auth/verify-email-otp`, { email, otp });
   return response.data;
 };
 
